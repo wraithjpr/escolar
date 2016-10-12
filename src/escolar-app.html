@@ -20,9 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="my-icons.html">
+<link rel="import" href="escolar-icons.html">
 
-<dom-module id="my-app">
+<dom-module id="escolar-app">
   <template>
     <style>
       :host {
@@ -75,9 +75,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer>
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="event-list" href="/event-list">Event List</a>
           <a name="view1" href="/view1">View One</a>
-          <a name="view2" href="/view2">View Two</a>
-          <a name="view3" href="/view3">View Three</a>
         </iron-selector>
       </app-drawer>
 
@@ -87,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
+            <div main-title>Chromebook Event Viewer</div>
           </app-toolbar>
         </app-header>
 
@@ -96,18 +95,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
+          <escolar-event-list name="event-list"></escolar-event-list>
+          <escolar-view1 name="view1"></escolar-view1>
+          <escolar-view404 name="view404"></escolar-view404>
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
   </template>
 
   <script>
+  (function (window, global, Polymer) {
+    'use strict';
+
     Polymer({
-      is: 'my-app',
+      is: 'escolar-app',
 
       properties: {
         page: {
@@ -121,19 +122,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)'
       ],
 
-      _routePageChanged: function(page) {
-        this.page = page || 'view1';
+      _routePageChanged: function (page) {
+        // default to the vent list
+        this.page = page || 'event-list';
       },
 
-      _pageChanged: function(page) {
+      _pageChanged: function (page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        var resolvedPageUrl = this.resolveUrl('escolar-' + page + '.html');
+
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
 
-      _showPage404: function() {
+      _showPage404: function () {
         this.page = 'view404';
       }
     });
+  }(window, window, Polymer));
   </script>
 </dom-module>

@@ -1,11 +1,10 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/escolar-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/escolar-event-list.html",
+    "src/escolar-view1.html",
+    "src/escolar-view404.html"
   ],
   "sourceGlobs": [
    "src/**/*",

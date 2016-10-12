@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>event-list tests</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/escolar-event-list.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <escolar-event-list></escolar-event-list>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('escolar-event-list tests', function () {
+        'use strict';
+
+        var element = null;
+
+        setup(function () {
+          element = fixture('basic');
+        });
+
+        test('Instantiating the element works.', function () {
+          assert.strictEqual(element.is, 'escolar-event-list');
+        });
+        test('Is not reporting a failure.', function () {
+          assert.isFalse(element.failure);
+        });
+        test('There are some items in the array of events.', function () {
+          assert.isArray(element.events);
+          assert.isAbove(element.events.length, 0);
+        });
+        test('All list items should be rendered on the page.', function (done) {
+          // Data bindings will stamp out new DOM asynchronously
+          // so wait to check for updates
+          flush(function () {
+            var listItems = Polymer.dom(element.root).querySelectorAll('li');
+
+            assert.isArray(listItems);
+            assert.isAbove(listItems.length, 0);
+            assert.strictEqual(listItems.length, element.events.length);
+            done();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="escolar-event-list">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      li a {
+        text-decoration: none;
+      }
+    </style>
+
+    <ul hidden$="[[failure]]">
+      <template is="dom-repeat" items="[[_getListItems(events)]]" initial-count="4">
+        <li>
+          <a href$="[[_getItemHref(item)]]">[[item.url]]</a>
+        </li>
+      </template>
+    </ul>
+  </template>
+
+  <script>
+    (function (window, global, Polymer) {
+      'use strict';
+
+      const EVENTS_DATA = [
+        {
+          _id: '57f0f8e02f2c3209347b1f49',
+          method: 'GET',
+          url: 'https://mochajs.org/'
+        }, {
+          _id: '57f1067db91f3a13f082718c',
+          method: 'GET',
+          url: 'https://github.com/wraithjpr/escolar'
+        }, {
+          _id: '57f109f85751c9199cfbda4c',
+          method: 'GET',
+          url: 'https://www.polymer-project.org/1.0/'
+        }, {
+          _id: '57f10a035751c9199cfbda4d',
+          method: 'GET',
+          url: 'http://eslint.org/docs/rules/no-underscore-dangle'
+        }
+      ];
+
+      Polymer({
+        is: 'escolar-event-list',
+
+        properties: {
+          events: {
+            type: Array,
+            readOnly: true,
+            notify: true,
+            value: function () {
+              return this._computeEvents(EVENTS_DATA);
+            }
+          },
+          failure: {
+            type: Boolean,
+            notify: true,
+            readOnly: true,
+            value: false
+          }
+        },
+
+        _computeEvents: function (data) {
+          // clone the array of events
+          return data.map(function (event) {
+            return Object.assign({}, event);
+          });
+        },
+        _getItemHref: function (item) {
+          // By returning null when `itemId` is undefined, the href attribute won't be set and
+          // the link will be disabled.
+          return item._id ? ['/api', 'events', item._id].join('/') : null;
+        },
+        _getListItems: function (items) {
+          // Return placeholder items when the items haven't loaded yet.
+          return items || [{}, {}, {}, {}];
+        }
+      });
+    }(window, window, Polymer));
+  </script>
+</dom-module>
