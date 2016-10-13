@@ -75,8 +75,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer>
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="/home">View One</a>
           <a name="event-list" href="/event-list">Event List</a>
-          <a name="view1" href="/view1">View One</a>
         </iron-selector>
       </app-drawer>
 
@@ -95,8 +95,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
+            <escolar-home name="home"></escolar-home>
           <escolar-event-list name="event-list"></escolar-event-list>
-          <escolar-view1 name="view1"></escolar-view1>
           <escolar-view404 name="view404"></escolar-view404>
         </iron-pages>
       </app-header-layout>
@@ -123,8 +123,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function (page) {
-        // default to the vent list
-        this.page = page || 'event-list';
+        // default to the home page
+        this.page = page || 'home';
       },
 
       _pageChanged: function (page) {

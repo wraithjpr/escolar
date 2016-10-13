@@ -3,7 +3,7 @@
   "shell": "src/escolar-app.html",
   "fragments": [
     "src/escolar-event-list.html",
-    "src/escolar-view1.html",
+    "src/escolar-home.html",
     "src/escolar-view404.html"
   ],
   "sourceGlobs": [
