@@ -4,7 +4,7 @@
     "es6": true,
     "mocha": true,
     "mongo": true,
-    "node": false
+    "node": true
   },
   "globals": {
     "assert": true,
