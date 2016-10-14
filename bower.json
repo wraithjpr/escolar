@@ -1,7 +1,7 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "escolar",
   "authors": [
-    "The Polymer Authors"
+    "James Wraith"
   ],
   "private": true,
   "dependencies": {

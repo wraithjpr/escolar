@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="escolar-capture-type-data.html">
+<link rel="import" href="escolar-shared-styles.html">
+
+<dom-module id="escolar-event-list">
+  <template>
+    <style include="escolar-shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      li a {
+        text-decoration: none;
+      }
+    </style>
+
+    <!--
+      app-route provides the name of the capture type.
+    -->
+    <app-route
+      route="[[route]]"
+      pattern="/:captureType"
+      data="{{routeData}}"></app-route>
+
+      <!--
+        escolar-capture-type-data provides the collection of events data for a given capture type name.
+      -->
+      <escolar-capture-type-data
+        id="captureTypeData"
+        capture-type="[[routeData.captureType]]"
+        events="{{events}}"
+        failure="{{failure}}"></escolar-capture-type-data>
+
+    <ul hidden$="[[failure]]">
+      <template is="dom-repeat" items="[[_getListItems(events)]]" initial-count="4">
+        <li>
+          <a href$="[[_getItemHref(item)]]">[[item.url]]</a>
+        </li>
+      </template>
+    </ul>
+  </template>
+
+  <script>
+    'use strict';
+
+    Polymer({
+      is: 'escolar-event-list',
+
+      properties: {
+        events: Array,
+        failure: Boolean,
+        route: Object,
+        routeData: Object
+      },
+
+      _getItemHref: function (item) {
+        // By returning null when `itemId` is undefined, the href attribute won't be set and
+        // the link will be disabled.
+        return item._id ? ['/api', 'events', item._id].join('/') : null;
+      },
+      _getListItems: function (items) {
+        // Return placeholder items when the items haven't loaded yet.
+        return items || [{}, {}, {}, {}];
+      }
+    });
+  </script>
+</dom-module>
