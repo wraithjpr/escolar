@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>event-list tests</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/escolar-capture-type-data.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <escolar-capture-type-data></escolar-capture-type-data>
+      </template>
+    </test-fixture>
+
+    <script>
+      'use strict';
+
+      suite('escolar-capture-type-data tests', function () {
+        var element = null;
+
+        setup(function () {
+          element = fixture('basic');
+        });
+
+        test('Instantiating the element works.', function () {
+          assert.strictEqual(element.is, 'escolar-capture-type-data');
+        });
+        test('Is not reporting a failure.', function () {
+          assert.isFalse(element.failure);
+        });
+        test('There are some items in the array of capture types.', function () {
+          assert.isArray(element.captureTypes);
+          assert.isAbove(element.captureTypes.length, 0);
+        });
+        test('There are some items in the array of events.', function () {
+          assert.isArray(element.events);
+          assert.isAbove(element.events.length, 0);
+        });
+        test('We can filter by capture type.', function () {
+          const MONITOR = 'monitor';
+          const monitorCount = element.events.filter((event) => MONITOR === event.captureType).length;
+
+          element.captureType = MONITOR;
+          assert.isArray(element.events);
+          assert.strictEqual(element.events.length, monitorCount);
+        });
+      });
+    </script>
+  </body>
+</html>

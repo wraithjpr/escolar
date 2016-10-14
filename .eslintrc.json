@@ -11,7 +11,8 @@
     "expect": true,
     "fixture": true,
     "flush": true,
-    "Polymer": true
+    "Polymer": true,
+    "WCT": true
   },
   "extends": "eslint:all",
   "plugins": ["eslint-plugin-html"],

@@ -1,0 +1,100 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="escolar-capture-type-data">
+  <script>
+  'use strict';
+
+  (function (window, global, Polymer) {
+    const CAPTURE_TYPES = [
+      {
+        name: 'block',
+        title: 'Block'
+      },
+      {
+        name: 'monitor',
+        title: 'Monitor'
+      },
+      {
+        name: 'redirect',
+        title: 'Redirect'
+      }
+    ];
+
+    const EVENTS_DATA = [
+      {
+        _id: '57f0f8e02f2c3209347b1f49',
+        captureType: 'monitor',
+        method: 'GET',
+        url: 'https://mochajs.org/'
+      }, {
+        _id: '57f1067db91f3a13f082718c',
+        captureType: 'monitor',
+        method: 'GET',
+        url: 'https://github.com/wraithjpr/escolar'
+      }, {
+        _id: '57f109f85751c9199cfbda4c',
+        captureType: 'monitor',
+        method: 'GET',
+        url: 'https://www.polymer-project.org/1.0/'
+      }, {
+        _id: '57f10a205751c9199cfbda73',
+        captureType: 'block',
+        method: 'GET',
+        url: 'https://www.dropbox.com/'
+      }, {
+        _id: '57f10a205751c9199cfbce24',
+        captureType: 'block',
+        method: 'GET',
+        url: 'https://twitter.com/'
+      }, {
+        _id: '57f10a205751c9199cfbba59',
+        captureType: 'redirect',
+        method: 'GET',
+        url: 'https://www.facebook.com/'
+      }, {
+        _id: '57f10a035751c9199cfbda4d',
+        captureType: 'monitor',
+        method: 'GET',
+        url: 'http://eslint.org/docs/rules/no-underscore-dangle'
+      }
+    ];
+
+    Polymer({
+      is: 'escolar-capture-type-data',
+
+      properties: {
+        captureType: {
+          type: String,
+          value: ''
+        },
+        captureTypes: {
+          type: Array,
+          value: CAPTURE_TYPES,
+          readOnly: true,
+          notify: true
+        },
+        events: {
+          type: Array,
+          computed: '_computeEvents(captureType)',
+          value: function () {
+            return [];
+          },
+          notify: true
+        },
+        failure: {
+          type: Boolean,
+          readOnly: true,
+          notify: true,
+          value: false
+        }
+      },
+
+      _computeEvents: function (captureType) {
+        return EVENTS_DATA.filter(function (value) {
+          return !captureType || captureType === value.captureType;
+        });
+      }
+    });
+  }(window, window, Polymer));
+  </script>
+</dom-module>

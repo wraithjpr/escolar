@@ -64,19 +64,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <app-location route="{{route}}"></app-location>
+    <!-- This app-route supports the iron-pages -->
     <app-route
       route="{{route}}"
       pattern="/:page"
       data="{{routeData}}"
       tail="{{subroute}}"></app-route>
 
+    <!-- This app-route supports the iron-selector of the menu in the app drawer -->
+    <app-route
+      route="{{route}}"
+      pattern="/:part1/:part2"
+      data="{{menuPartsData}}"></app-route>
+
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer>
         <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="/home">View One</a>
-          <a name="event-list" href="/event-list">Event List</a>
+        <iron-selector selected="[[_computeMenuName(menuPartsData)]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="/home">Home</a>
+          <a name="event-list-block" href="/event-list/block">Blocked Events</a>
+          <a name="event-list-monitor" href="/event-list/monitor">Monitored Events</a>
+          <a name="event-list-redirect" href="/event-list/redirect">Redirected Events</a>
         </iron-selector>
       </app-drawer>
 
@@ -86,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div main-title>Chromebook Event Viewer</div>
+            <div main-title>Activity Viewer</div>
           </app-toolbar>
         </app-header>
 
@@ -96,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <escolar-home name="home"></escolar-home>
-          <escolar-event-list name="event-list"></escolar-event-list>
+          <escolar-event-list name="event-list" route="[[subroute]]"></escolar-event-list>
           <escolar-view404 name="view404"></escolar-view404>
         </iron-pages>
       </app-header-layout>
@@ -104,7 +113,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-  (function (window, global, Polymer) {
     'use strict';
 
     Polymer({
@@ -122,6 +130,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)'
       ],
 
+      _computeMenuName: function (menuPartsData) {
+        return Object.keys(menuPartsData).map(function (key) {
+          return menuPartsData[key];
+        }).join('-');
+      },
+
       _routePageChanged: function (page) {
         // default to the home page
         this.page = page || 'home';
@@ -138,6 +152,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.page = 'view404';
       }
     });
-  }(window, window, Polymer));
   </script>
 </dom-module>
